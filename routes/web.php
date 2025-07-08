@@ -25,8 +25,10 @@ Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/dashboard', [DashboardController::class,'index'])->name('dashboard')->middleware('auth');
 Route::get('/data_siswa', [DataSiswaController::class,'index'])->name('data_siswa')->middleware('auth');
 Route::post('/siswa_store', [DataSiswaController::class,'store'])->name('siswa.store')->middleware('auth');
+Route::get('/siswa_delete/{id}', [DataSiswaController::class,'destroy'])->middleware('auth');
 Route::get('/penilaian_siswa', [PenilaianSiswaController::class,'index'])->name('penilaian_siswa')->middleware('auth');
 Route::post('/store_penilaian', [PenilaianSiswaController::class,'store'])->name('penilaian.store')->middleware('auth');
+Route::get('/penilaian_delete/{id}', [PenilaianSiswaController::class,'destroy'])->middleware('auth');
 Route::get('/laporan_siswa', [LaporanSiswaController::class,'index'])->name('laporan_siswa')->middleware('auth');
 
 Route::get('/non_admin', function () {

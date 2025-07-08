@@ -14,7 +14,7 @@ class PenilaianSiswaController extends Controller
     public function index()
     {
         $dataSiswa = DataSiswa::all();
-        $penilaianSiswa = PenilaianSiswa::all();
+        $penilaianSiswa = PenilaianSiswa::orderByDesc('created_at')->get();
         return view('penilaian', compact('dataSiswa', 'penilaianSiswa'));
     }
 
@@ -34,30 +34,34 @@ class PenilaianSiswaController extends Controller
     }
     public function store(Request $request)
     {
-        $validated = $request->validate([
-        'siswa_id' => 'required|exists:data_siswa,id',
-        'nama_siswa' => 'required',
+        $validated = $request->validate([  
+        'nama_siswa' =>  'required',     
         'jenis' => 'required|in:prestasi,pelanggaran',
         'kategori' => 'required|in:akademik,nonakademik',
         'keterangan' => 'required|string|max:255',
-        'poin' => 'required|integer',
+        'poin' => 'required|integer|min:1|max:100',
         'tanggal' => 'required|date',
-        ], [
-            'nama_siswa.required' => 'Silakan pilih siswa.',
-            'siswa_id.exists' => 'Siswa tidak ditemukan.',
-            'siswa_id.required' => 'Siswa tidak .',
+        ], [                             
+            'nama_siswa.required' => 'Siswa harus dipilih.',
             'jenis.required' => 'Jenis penilaian harus dipilih.',
             'jenis.in' => 'Jenis penilaian tidak valid.',
             'kategori.required' => 'Kategori penilaian harus dipilih.',
             'kategori.in' => 'Kategori tidak valid.',
             'keterangan.required' => 'Keterangan wajib diisi.',
             'keterangan.max' => 'Keterangan maksimal 255 karakter.',
-            'poin.required' => 'Poin wajib diisi.',
-            'poin.integer' => 'Poin harus berupa angka.',
+            'poin.required' => 'Kolom poin wajib diisi.',
+            'poin.integer'  => 'Poin harus berupa angka bulat.',
+            'poin.min'      => 'Poin minimal adalah 1.',
+            'poin.max'      => 'Poin maksimal adalah 100.',
             'tanggal.required' => 'Tanggal wajib diisi.',
             'tanggal.date' => 'Format tanggal tidak valid.',
         ]);
 
+        $idSiswa = $request->nama_siswa;
+        $nama = DataSiswa::findOrFail($idSiswa)->first();
+        $namaSiswa = $nama->nama;
+        $validated['nama_siswa'] = $namaSiswa;
+        $validated['siswa_id'] = $idSiswa;
         PenilaianSiswa::create($validated);
 
         return redirect()->back()->with('success', 'Data penilaian berhasil disimpan.');
@@ -90,8 +94,11 @@ class PenilaianSiswaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $data = PenilaianSiswa::findOrFail($id);
+        $data ->delete();
+        
+        return redirect()->back()->with('success', 'Data berhasil dihapus');
     }
 }

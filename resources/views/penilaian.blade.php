@@ -13,27 +13,16 @@
     
     <div class="form-grid">
         <div>
-            <h3>Input Prestasi/Pelanggaran</h3>
+            <h3 style="margin-bottom: 15px">Input Prestasi/Pelanggaran</h3>
 
             <form id="form-penilaian" action="{{ route('penilaian.store') }}" method="POST">
                 @csrf
-                <input type="hidden" name="siswa_id" id="siswa_id">
-                @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
-
                 <div class="form-group">
                     <label class="form-label">Pilih Siswa</label>
                     <select class="form-select" name="nama_siswa" id="pilih-siswa">
                         <option value="">Pilih Siswa</option>
                         @foreach ($dataSiswa as $data)
-                            <option value="{{ $data->nama }}" data-id="{{ $data->id }}" {{ old('nama_siswa') == $data->nama ? 'selected' : '' }}>
+                            <option value="{{ $data->id }}" {{ old('nama_siswa') == $data->id ? 'selected' : '' }}>
                                 {{ $data->nama }}
                             </option>
                         @endforeach
@@ -127,7 +116,7 @@
                         <td>{{ $penilaian->keterangan }}</td>
                         <td><span class="point-display point-{{ $penilaian->jenis == 'prestasi' ? 'positive' : 'negative'}}">{{ $penilaian->jenis == 'prestasi' ? '+'.$penilaian->poin : '-'.$penilaian->poin}}</span></td>
                         <td>
-                            <button class="btn btn-danger" onclick="hapusPenilaian(1)">Hapus</button>
+                            <button class="btn btn-danger" data-id="{{ $penilaian->id }}" onclick="hapusPenilaian(this)">Hapus</button>
                         </td>
                     </tr>
                     @endforeach
@@ -139,18 +128,23 @@
 </section>
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 <script src="//cdn.datatables.net/2.3.2/js/dataTables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+@if (session('success'))
+    <script>
+        Swal.fire({
+            title: "Berhasil!",
+            text: `{{ session('success') }}`,
+            icon: "success"
+        });
+    </script>
+@endif
 <script>
     let table = new DataTable('#myTable', {
         ordering: false  
     });
     
-    const select = document.getElementById('pilih-siswa');
-    let siswa_id = document.getElementById('siswa_id');
-    select.onchange = () => {
-        const selectedOption = select.options[select.selectedIndex];
-        const dataId = selectedOption.getAttribute('data-id');
-        siswa_id.value = parseInt(dataId);
-    }
+
 
     // Mendapatkan tanggal hari ini
     const today = new Date();
@@ -165,5 +159,24 @@
 
     // Set nilai max pada input tanggal ke hari ini
     document.getElementById('tanggal-penilaian').setAttribute('max', formatDate(today));
+
+    function hapusPenilaian(hapus){
+        let id = hapus.getAttribute('data-id');
+        Swal.fire({
+            title: "Apakah Anda Yakin?",
+            text: "Penilaian ini akan dihapus dari sistem!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Ya, hapus!",
+            cancelButtonText: "Batal",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                 window.location.href = '/penilaian_delete/' + id;
+            }
+        });
+
+    }
 </script>
 </x-layout>

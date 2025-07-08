@@ -1,4 +1,13 @@
 <x-layout title="Data Siswa">
+    <link rel="stylesheet" href="//cdn.datatables.net/2.3.2/css/dataTables.dataTables.min.css">
+    
+    <style>
+        #myTable {
+            width: 100%;
+            table-layout: fixed; /* Prevents column width from expanding */
+        }
+
+    </style>
     <section id="data-siswa" class="content-section">
         <h1 class="page-title">Data Siswa</h1>
         
@@ -45,7 +54,7 @@
 
         <div class="table-container">
             <h3 style="padding: 20px; margin: 0; background: #f8f9fa; border-bottom: 1px solid #e0e0e0;">Daftar Siswa</h3>
-            <table class="table">
+            <table class="table" id="myTable">
                 <thead>
                     <tr>
                         <th>No</th>
@@ -65,7 +74,7 @@
                         <td>{{ $data->kelas }}</td>
                         <td>
                             <button class="btn btn-success" onclick="editSiswa('2023001')">Edit</button>
-                            <button class="btn btn-danger" onclick="hapusSiswa('2023001')">Hapus</button>
+                            <button class="btn btn-danger" data-id="{{ $data->id }}" data-nama="{{ $data->nama }}" onclick="hapusSiswa(this)">Hapus</button>
                         </td>
                     </tr>
                     @endforeach
@@ -73,4 +82,42 @@
             </table>
         </div>
     </section>
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+<script src="//cdn.datatables.net/2.3.2/js/dataTables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+@if (session('success'))
+    <script>
+        Swal.fire({
+            title: "Berhasil!",
+            text: `{{ session('success') }}`,
+            icon: "success"
+        });
+    </script>
+@endif
+<script>
+    let table = new DataTable('#myTable', {
+        ordering: false  
+    });
+
+    function hapusSiswa(hapus){
+        let data = hapus.getAttribute('data-id');
+        let nama = hapus.getAttribute('data-nama');
+        Swal.fire({
+            title: "Apakah Anda Yakin?",
+            text: nama + " akan dihapus dari sistem!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Ya, hapus!",
+            cancelButtonText: "Batal",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                 window.location.href = '/siswa_delete/' + data;
+            }
+        });
+       
+    }
+</script>
 </x-layout>

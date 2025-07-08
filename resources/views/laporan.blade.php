@@ -4,11 +4,15 @@
         
         <div class="stats-grid">
             <div class="stat-card">
-                <div class="stat-number">{{ $presentasePrestasi }}%</div>
+                <div class="stat-number">
+                    {{ fmod($presentasePrestasi, 1) == 0 ? intval($presentasePrestasi) : number_format($presentasePrestasi, 2) }}%
+                </div>
                 <div class="stat-label">Siswa Berprestasi</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number">{{ $presentaseMasalah }}%</div>
+                <div class="stat-number">
+                    {{ fmod($presentaseMasalah, 1) == 0 ? intval($presentaseMasalah) : number_format($presentaseMasalah, 2) }}%
+                </div>
                 <div class="stat-label">Siswa Bermasalah</div>
             </div>
             <div class="stat-card">

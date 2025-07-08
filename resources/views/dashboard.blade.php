@@ -1,18 +1,27 @@
 <x-layout title="Dashboard">
+    <link rel="stylesheet" href="//cdn.datatables.net/2.3.2/css/dataTables.dataTables.min.css">
+    
+    <style>
+        #myTable {
+            width: 100%;
+            table-layout: fixed; /* Prevents column width from expanding */
+        }
+
+    </style>
     <section id="home" class="content-section active">
         <h1 class="page-title">Dashboard Utama</h1>
         
         <div class="stats-grid">
             <div class="stat-card">
-                <div class="stat-number" id="total-siswa">156</div>
+                <div class="stat-number" id="total-siswa">{{ $jmlSiswa }}</div>
                 <div class="stat-label">Total Siswa</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number" id="prestasi-bulan">28</div>
+                <div class="stat-number" id="prestasi-bulan">{{ $jmlPrestasi }}</div>
                 <div class="stat-label">Prestasi Bulan Ini</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number" id="pelanggaran-bulan">12</div>
+                <div class="stat-number" id="pelanggaran-bulan">{{ $jmlMasalah }}</div>
                 <div class="stat-label">Pelanggaran Bulan Ini</div>
             </div>
             <div class="stat-card">
@@ -23,40 +32,37 @@
 
         <div class="table-container">
             <h3 style="padding: 20px; margin: 0; background: #f8f9fa; border-bottom: 1px solid #e0e0e0;">Aktivitas Terbaru</h3>
-            <table class="table">
+            <table class="table" id="myTable">
                 <thead>
                     <tr>
-                        <th>Tanggal</th>
-                        <th>Siswa</th>
-                        <th>Jenis</th>
-                        <th>Keterangan</th>
-                        <th>Poin</th>
+                        <th>No</th>
+                        <th style="text-align: left;">NIS</th>
+                        <th>Nama</th>
+                        <th>Kelas</th>
                     </tr>
                 </thead>
                 <tbody id="recent-activities">
+                    @foreach ($dataSiswa as $nomor => $data)
+                    @php
+                        $nomor += 1;
+                    @endphp
+                        
                     <tr>
-                        <td>21/06/2025</td>
-                        <td>Ahmad Rizki</td>
-                        <td><span class="badge badge-success">Prestasi</span></td>
-                        <td>Juara 1 Olimpiade Matematika</td>
-                        <td><span class="point-display point-positive">+15</span></td>
+                        <td>{{ $nomor }}</td>
+                        <td style="text-align: left;">{{ $data->nis }}</td>
+                        <td>{{ $data->nama }}</td>
+                        <td>{{ $data->kelas }}</td>
                     </tr>
-                    <tr>
-                        <td>20/06/2025</td>
-                        <td>Siti Aminah</td>
-                        <td><span class="badge badge-danger">Pelanggaran</span></td>
-                        <td>Terlambat masuk kelas</td>
-                        <td><span class="point-display point-negative">-5</span></td>
-                    </tr>
-                    <tr>
-                        <td>19/06/2025</td>
-                        <td>Budi Santoso</td>
-                        <td><span class="badge badge-success">Prestasi</span></td>
-                        <td>Membantu teman yang kesulitan</td>
-                        <td><span class="point-display point-positive">+8</span></td>
-                    </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
     </section>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+<script src="//cdn.datatables.net/2.3.2/js/dataTables.min.js"></script>
+<script>
+    let table = new DataTable('#myTable', {
+        ordering: false  
+    });
+</script>
 </x-layout>

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DataSiswa;
+use App\Models\PenilaianSiswa;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -11,7 +13,19 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('dashboard');
+        $dataSiswa = DataSiswa::all();
+        $jmlSiswa = DataSiswa::count();
+        $jmlPrestasi = PenilaianSiswa::where('jenis', 'prestasi')->count();
+        $jmlMasalah = PenilaianSiswa::where('jenis', 'pelanggaran')->count();
+        return view(
+            'dashboard',
+            compact(
+                'dataSiswa',
+                'jmlSiswa',
+                'jmlPrestasi',
+                'jmlMasalah'
+                )
+        );
     }
 
     /**
