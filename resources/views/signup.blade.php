@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar - Bergabung Dengan Kami</title>
+    <link rel="shortcut icon" href="{{ 'img/LOGO-QUANTUM.png' }}" type="image/x-icon">
+    <title>Penilaian Siswa | Daftar</title>
     <style>
         * {
             margin: 0;
@@ -506,7 +507,7 @@
             @endif
 
         <div class="login-link">
-            Sudah punya akun? <a href="/login">Masuk di sini</a>
+            Sudah punya akun? <a href="/login">Masuk</a>
         </div>
     </div>
 

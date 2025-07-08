@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('data_siswa', function (Blueprint $table) {
             $table->id();
+            $table->string('nis')->unique();
+            $table->string('kelas');
+            $table->string('nama');
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }

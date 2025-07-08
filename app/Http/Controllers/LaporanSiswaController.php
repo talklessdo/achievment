@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PenilaianSiswa;
 use Illuminate\Http\Request;
 
 class LaporanSiswaController extends Controller
@@ -11,7 +12,17 @@ class LaporanSiswaController extends Controller
      */
     public function index()
     {
-        return view('laporan');
+        $totalSiswa = PenilaianSiswa::count();
+        $jmlPrestasi = PenilaianSiswa::where('jenis','prestasi')->count();
+        $jmlMasalah = PenilaianSiswa::where('jenis','pelanggaran')->count();
+        $presentasePrestasi = $totalSiswa > 0 ? ($jmlPrestasi / $totalSiswa) * 100 : 0;
+        $presentaseMasalah = $totalSiswa > 0 ? ($jmlMasalah / $totalSiswa) * 100 : 0;
+        return view('laporan', compact(
+            'presentasePrestasi', 
+            'presentaseMasalah',
+            'jmlPrestasi',
+            'jmlMasalah',
+        ));
     }
 
     /**

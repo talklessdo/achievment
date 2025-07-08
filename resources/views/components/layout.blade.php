@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Penilaian Siswa</title>
+    <link rel="shortcut icon" href="{{ 'img/LOGO-QUANTUM.png' }}" type="image/x-icon">
+    <title>Penilaian Siswa | {{ $title ?? '' }}</title>
     <style>
         * {
             margin: 0;

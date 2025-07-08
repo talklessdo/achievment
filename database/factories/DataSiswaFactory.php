@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\DataSiswa;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -14,10 +15,14 @@ class DataSiswaFactory extends Factory
      *
      * @return array<string, mixed>
      */
+    protected $model = DataSiswa::class;
     public function definition(): array
     {
+
         return [
-            //
+            'nis' => $this->faker->unique()->numerify('131232750027#####'), // NIS 7 digit dengan prefix 29001
+            'kelas' => $this->faker->randomElement(['X', 'XI', 'XII']), // Kelas X, XI, atau XII
+            'nama' => $this->faker->name, // Nama acak
         ];
     }
 }

@@ -1,33 +1,45 @@
-<x-layout>
+<x-layout title="Data Siswa">
     <section id="data-siswa" class="content-section">
         <h1 class="page-title">Data Siswa</h1>
         
         <div class="form-grid">
             <div>
                 <h3>Tambah Siswa Baru</h3>
-                <form id="form-siswa">
+                <form id="form-siswa" action="{{ route('siswa.store') }}" method="POST">
+                    @csrf
+
                     <div class="form-group">
                         <label class="form-label">Nama Lengkap</label>
-                        <input type="text" class="form-input" id="nama-siswa" required>
+                        <input type="text" class="form-input" id="nama-siswa" name="nama" value="{{ old('nama') }}">
+                        @error('nama')
+                            <small style="color: red;">{{ $message }}</small>
+                        @enderror
                     </div>
+
                     <div class="form-group">
                         <label class="form-label">NIS</label>
-                        <input type="text" class="form-input" id="nis-siswa" required>
+                        <input type="text" maxlength="7" class="form-input" id="nis-siswa" name="nis" value="{{ old('nis') }}">
+                        @error('nis')
+                            <small style="color: red;">{{ $message }}</small>
+                        @enderror
                     </div>
+
                     <div class="form-group">
                         <label class="form-label">Kelas</label>
-                        <select class="form-select" id="kelas-siswa" required>
+                        <select class="form-select" id="kelas-siswa" name="kelas">
                             <option value="">Pilih Kelas</option>
-                            <option value="X-A">X-A</option>
-                            <option value="X-B">X-B</option>
-                            <option value="XI-A">XI-A</option>
-                            <option value="XI-B">XI-B</option>
-                            <option value="XII-A">XII-A</option>
-                            <option value="XII-B">XII-B</option>
+                            <option value="X" {{ old('kelas') == 'X' ? 'selected' : '' }}>X</option>
+                            <option value="XI" {{ old('kelas') == 'XI' ? 'selected' : '' }}>XI</option>
+                            <option value="XII" {{ old('kelas') == 'XII' ? 'selected' : '' }}>XII</option>
                         </select>
+                        @error('kelas')
+                            <small style="color: red;">{{ $message }}</small>
+                        @enderror
                     </div>
+
                     <button type="submit" class="btn">Tambah Siswa</button>
                 </form>
+
             </div>
         </div>
 
@@ -36,37 +48,27 @@
             <table class="table">
                 <thead>
                     <tr>
+                        <th>No</th>
                         <th>NIS</th>
                         <th>Nama</th>
                         <th>Kelas</th>
-                        <th>Total Poin</th>
-                        <th>Status</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody id="tabel-siswa">
+                    @foreach ($dataSiswa as $nomor => $data)
+                    @php $nomor += 1; @endphp
                     <tr>
-                        <td>2023001</td>
-                        <td>Ahmad Rizki</td>
-                        <td>X-A</td>
-                        <td><span class="point-display point-positive">+25</span></td>
-                        <td><span class="badge badge-success">Baik</span></td>
+                        <td>{{ $nomor }}</td>
+                        <td>{{ $data->nis }}</td>
+                        <td>{{ $data->nama }}</td>
+                        <td>{{ $data->kelas }}</td>
                         <td>
                             <button class="btn btn-success" onclick="editSiswa('2023001')">Edit</button>
                             <button class="btn btn-danger" onclick="hapusSiswa('2023001')">Hapus</button>
                         </td>
                     </tr>
-                    <tr>
-                        <td>2023002</td>
-                        <td>Siti Aminah</td>
-                        <td>X-B</td>
-                        <td><span class="point-display point-negative">-5</span></td>
-                        <td><span class="badge badge-warning">Perhatian</span></td>
-                        <td>
-                            <button class="btn btn-success" onclick="editSiswa('2023002')">Edit</button>
-                            <button class="btn btn-danger" onclick="hapusSiswa('2023002')">Hapus</button>
-                        </td>
-                    </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>

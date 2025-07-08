@@ -13,7 +13,16 @@ return new class extends Migration
     {
         Schema::create('penilaian_siswa', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('siswa_id');
+            $table->string('nama_siswa');
+            $table->string('jenis');
+            $table->string('kategori');
+            $table->date('tanggal');
+            $table->string('keterangan')->nullable();
+            $table->integer('poin')->default(0);
             $table->timestamps();
+
+            $table->foreign('siswa_id')->references('id')->on('data_siswa')->onDelete('cascade');
         });
     }
 

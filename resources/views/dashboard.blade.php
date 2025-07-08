@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout title="Dashboard">
     <section id="home" class="content-section active">
         <h1 class="page-title">Dashboard Utama</h1>
         

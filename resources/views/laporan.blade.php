@@ -4,19 +4,19 @@
         
         <div class="stats-grid">
             <div class="stat-card">
-                <div class="stat-number">85%</div>
+                <div class="stat-number">{{ $presentasePrestasi }}%</div>
                 <div class="stat-label">Siswa Berprestasi</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number">15%</div>
+                <div class="stat-number">{{ $presentaseMasalah }}%</div>
                 <div class="stat-label">Siswa Bermasalah</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number">142</div>
+                <div class="stat-number">{{ $jmlPrestasi }}</div>
                 <div class="stat-label">Total Prestasi</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number">38</div>
+                <div class="stat-number">{{ $jmlMasalah }}</div>
                 <div class="stat-label">Total Pelanggaran</div>
             </div>
         </div>

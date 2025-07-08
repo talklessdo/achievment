@@ -11,4 +11,14 @@ class PenilaianSiswa extends Model
     use HasFactory;
 
     protected $table = 'penilaian_siswa';
+
+    protected $fillable = [
+        'siswa_id',
+        'nama_siswa',
+        'jenis',
+        'kategori',
+        'tanggal',
+        'keterangan',
+        'poin',
+    ];
 }
