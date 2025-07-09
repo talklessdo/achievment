@@ -20,7 +20,7 @@ class DataSiswaFactory extends Factory
     {
 
         return [
-            'nis' => $this->faker->unique()->numerify('131232750027#####'), // NIS 7 digit dengan prefix 29001
+            'nis' => $this->faker->unique()->numerify('#######'), // NIS 7 digit dengan prefix 29001
             'kelas' => $this->faker->randomElement(['X', 'XI', 'XII']), // Kelas X, XI, atau XII
             'nama' => $this->faker->name, // Nama acak
         ];

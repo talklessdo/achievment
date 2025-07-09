@@ -1,4 +1,19 @@
-<x-layout>
+<x-layout title="Laporan">
+    <link rel="stylesheet" href="//cdn.datatables.net/2.3.2/css/dataTables.dataTables.min.css">
+    <style>
+        #myTable {
+            width: 100%;
+            table-layout: fixed; /* Prevents column width from expanding */
+            
+        }
+
+        .badge-primary {
+            background-color: #0056b3 !important; /* Biru gelap */
+            color: #ffffff !important;
+        }
+
+
+    </style>
     <section id="laporan" class="content-section">
         <h1 class="page-title">Laporan</h1>
         
@@ -46,14 +61,13 @@
                         <option value="XI-B">XI-B</option>
                     </select>
                 </div>
-                <button class="btn" onclick="generateLaporan()">Generate Laporan</button>
-                <button class="btn btn-success" onclick="exportLaporan()">Export Excel</button>
+                <button class="btn btn-success" onclick="exportLaporan()">Cetak Laporan</button>
             </div>
         </div>
 
-        <div class="table-container">
+        <div class="table-container" style="padding-left: 10px; padding-right: 10px;">
             <h3 style="padding: 20px; margin: 0; background: #f8f9fa; border-bottom: 1px solid #e0e0e0;">Ranking Siswa</h3>
-            <table class="table">
+            <table class="table" id="myTable">
                 <thead>
                     <tr>
                         <th>Ranking</th>
@@ -66,35 +80,61 @@
                     </tr>
                 </thead>
                 <tbody id="tabel-ranking">
+                    @foreach ($dataSiswa as $rank => $data)
+                        @php
+                            $rank += 1;
+                        @endphp
                     <tr>
-                        <td>🥇 1</td>
-                        <td>Ahmad Rizki</td>
-                        <td>X-A</td>
-                        <td><span class="point-display point-positive">+25</span></td>
-                        <td>3</td>
-                        <td>0</td>
-                        <td><span class="badge badge-success">Terbaik</span></td>
+                        <td>
+                            @if ($rank == 1)
+                                🥇 {{ $rank }}
+                            @elseif ($rank == 2)
+                                🥈 {{ $rank }}
+                            @elseif ($rank == 3)
+                                🥉 {{ $rank }}
+                            @else
+                                
+                            @endif
+                        </td>
+                        <td>{{ $data->nama }}</td>
+                        <td>{{ $data->kelas }}</td>
+                        <td><span class="point-display point-{{ $data->total_poin >= 0 ? 'positive' : 'negative' }}">{{ $data->total_poin }}</span></td>
+                        <td>{{ $data->total_prestasi }}</td>
+                        <td>{{ $data->total_pelanggaran }}</td>
+                        <td>
+                            @php
+                                $poin = $data->total_poin;
+                                if ($poin >= 80) {
+                                    $status = ['label' => 'Teladan', 'badge' => 'success'];
+                                } elseif ($poin >= 50) {
+                                    $status = ['label' => 'Baik', 'badge' => 'primary'];
+                                } elseif ($poin >= 20) {
+                                    $status = ['label' => 'Cukup', 'badge' => 'warning'];
+                                } else {
+                                    $status = ['label' => 'Perhatian', 'badge' => 'danger'];
+                                }
+                            @endphp
+
+                            <span class="badge badge-{{ $status['badge'] }}">
+                                {{ $status['label'] }}
+                            </span>
+                        </td>
+
                     </tr>
-                    <tr>
-                        <td>🥈 2</td>
-                        <td>Budi Santoso</td>
-                        <td>XI-A</td>
-                        <td><span class="point-display point-positive">+18</span></td>
-                        <td>2</td>
-                        <td>0</td>
-                        <td><span class="badge badge-success">Baik</span></td>
-                    </tr>
-                    <tr>
-                        <td>🥉 3</td>
-                        <td>Dewi Lestari</td>
-                        <td>X-B</td>
-                        <td><span class="point-display point-positive">+12</span></td>
-                        <td>2</td>
-                        <td>1</td>
-                        <td><span class="badge badge-success">Baik</span></td>
-                    </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
     </section>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="//cdn.datatables.net/2.3.2/js/dataTables.min.js"></script>
+    <script>
+
+        function exportLaporan(){
+            window.open('/laporan_pdf', '_blank');
+        }
+        let table = new DataTable('#myTable', {
+            ordering: false  
+        });
+    </script>
 </x-layout>

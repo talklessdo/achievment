@@ -86,7 +86,7 @@
         </div>
     </div>
 
-    <div class="table-container">
+    <div class="table-container" style="padding-left: 10px; padding-right: 10px;">
         <h3 style="padding: 20px; margin: 0; background: #f8f9fa; border-bottom: 1px solid #e0e0e0;">Riwayat Penilaian</h3>
         <div style="overflow-x: auto;">
             <table class="table" id="myTable">

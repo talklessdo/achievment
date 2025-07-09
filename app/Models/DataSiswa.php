@@ -17,4 +17,21 @@ class DataSiswa extends Model
         'kelas',
         'status',
     ];
+
+    // Getter: ambil hanya 7 digit terakhir
+    public function getNisAttribute($value)
+    {
+        return substr($value, -7);
+    }
+
+    // Setter: simpan dengan awalan tetap
+    public function setNisAttribute($value)
+    {
+        $this->attributes['nis'] = '131232750027' . $value;
+    }
+
+    public function getFullNisAttribute(){
+        return $this->attributes['nis'];
+    }
+
 }

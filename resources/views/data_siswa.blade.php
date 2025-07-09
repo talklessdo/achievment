@@ -52,13 +52,13 @@
             </div>
         </div>
 
-        <div class="table-container">
+        <div class="table-container" style="padding-left: 10px; padding-right: 10px;">
             <h3 style="padding: 20px; margin: 0; background: #f8f9fa; border-bottom: 1px solid #e0e0e0;">Daftar Siswa</h3>
             <table class="table" id="myTable">
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>NIS</th>
+                        <th style="text-align: left;">NIS</th>
                         <th>Nama</th>
                         <th>Kelas</th>
                         <th>Aksi</th>
@@ -69,11 +69,11 @@
                     @php $nomor += 1; @endphp
                     <tr>
                         <td>{{ $nomor }}</td>
-                        <td>{{ $data->nis }}</td>
+                        <td style="text-align: left;">{{ $data->full_nis }}</td>
                         <td>{{ $data->nama }}</td>
                         <td>{{ $data->kelas }}</td>
                         <td>
-                            <button class="btn btn-success" onclick="editSiswa('2023001')">Edit</button>
+                            <button class="btn btn-success" data-id="{{ $data->id }}" onclick="editSiswa(this)">Edit</button>
                             <button class="btn btn-danger" data-id="{{ $data->id }}" data-nama="{{ $data->nama }}" onclick="hapusSiswa(this)">Hapus</button>
                         </td>
                     </tr>
@@ -118,6 +118,11 @@
             }
         });
        
+    }
+
+    function editSiswa(edit){
+        const id = edit.getAttribute('data-id');
+        window.location.href = '/siswa_edit-' + id;
     }
 </script>
 </x-layout>
