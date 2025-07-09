@@ -378,61 +378,6 @@
             
         </div>
 
-        <div class="signup-link">
-            Belum punya akun? <a href="/signup">Daftar</a>
-        </div>
     </div>
-
-    {{-- <script>
-        // Form submission handling
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const container = document.querySelector('.login-container');
-            const button = document.querySelector('.login-button');
-            
-            // Add loading state
-            container.classList.add('loading');
-            button.innerHTML = '<span style="display: inline-block; animation: spin 1s linear infinite;">⟳</span> Masuk...';
-            
-            // Simulate login process
-            setTimeout(() => {
-                container.classList.remove('loading');
-                button.innerHTML = '✓ Berhasil!';
-                button.style.background = '#10b981';
-                
-                setTimeout(() => {
-                    alert('Login berhasil! (Demo)');
-                    button.innerHTML = 'Masuk';
-                    button.style.background = '';
-                }, 1500);
-            }, 2000);
-        });
-
-        // Input animations
-        document.querySelectorAll('.form-input').forEach(input => {
-            input.addEventListener('focus', function() {
-                this.parentElement.style.transform = 'scale(1.02)';
-            });
-            
-            input.addEventListener('blur', function() {
-                this.parentElement.style.transform = 'scale(1)';
-            });
-        });
-
-        // Social button interactions
-        document.querySelectorAll('.social-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const provider = this.textContent.trim();
-                alert(`Login dengan ${provider} (Demo)`);
-            });
-        });
-
-        // Forgot password
-        document.querySelector('.forgot-password').addEventListener('click', function(e) {
-            e.preventDefault();
-            alert('Fitur lupa password akan segera hadir!');
-        });
-    </script> --}}
 </body>
 </html>

@@ -40,7 +40,7 @@
             </div>
         </div>
 
-        <div class="form-grid">
+        {{-- <div class="form-grid">
             <div>
                 <h3>Filter Laporan</h3>
                 <div class="form-group">
@@ -63,7 +63,7 @@
                 </div>
                 <button class="btn btn-success" onclick="exportLaporan()">Cetak Laporan</button>
             </div>
-        </div>
+        </div> --}}
 
         <div class="table-container" style="padding-left: 10px; padding-right: 10px;">
             <h3 style="padding: 20px; margin: 0; background: #f8f9fa; border-bottom: 1px solid #e0e0e0;">Ranking Siswa</h3>
