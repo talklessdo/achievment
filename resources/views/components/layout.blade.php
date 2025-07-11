@@ -318,6 +318,9 @@
             color: #856404;
         }
 
+        .desktop-only-overlay {
+            display: none;
+        }
         @media (max-width: 768px) {
             .container {
                 flex-direction: column;
@@ -335,10 +338,28 @@
             .stats-grid {
                 grid-template-columns: 1fr;
             }
+            .desktop-only-overlay {
+                display: flex;
+                position: fixed;
+                z-index: 9999;
+                top: 0; left: 0; right: 0; bottom: 0;
+                background: rgba(30,30,30,0.92);
+                align-items: center;
+                justify-content: center;
+                color: #fff;
+                font-size: 1.3em;
+                font-weight: 600;
+                text-align: center;
+                padding: 32px;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="desktop-only-overlay">
+        Mohon maaf, aplikasi ini hanya dapat digunakan pada layar desktop atau tablet dengan resolusi lebar.<br>
+        Silakan akses menggunakan komputer/laptop untuk pengalaman terbaik.
+    </div>
     <div class="container">
         <!-- Sidebar -->
         <x-sidebar></x-sidebar>

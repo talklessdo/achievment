@@ -17,13 +17,24 @@ class DashboardController extends Controller
         $jmlSiswa = DataSiswa::count();
         $jmlPrestasi = PenilaianSiswa::where('jenis', 'prestasi')->count();
         $jmlMasalah = PenilaianSiswa::where('jenis', 'pelanggaran')->count();
+
+        // Hitung total poin per siswa
+        $poinPerSiswa = \DB::table('penilaian_siswa')
+            ->select('siswa_id',
+                \DB::raw('SUM(CASE WHEN jenis = "prestasi" THEN poin ELSE 0 END) - SUM(CASE WHEN jenis = "pelanggaran" THEN poin ELSE 0 END) as total_poin')
+            )
+            ->groupBy('siswa_id')
+            ->pluck('total_poin');
+        $rataPoin = $jmlSiswa > 0 ? round($poinPerSiswa->sum() / $jmlSiswa, 1) : 0;
+
         return view(
             'dashboard',
             compact(
                 'dataSiswa',
                 'jmlSiswa',
                 'jmlPrestasi',
-                'jmlMasalah'
+                'jmlMasalah',
+                'rataPoin'
                 )
         );
     }

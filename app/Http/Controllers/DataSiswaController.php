@@ -42,10 +42,6 @@ class DataSiswaController extends Controller
             'kelas.in' => 'Kelas tidak valid.',
         ]);
 
-        // Simpan data siswa ke database
-        // DataSiswa::create($validated);
-
-        $validated['nis'] =  '131232750027' . $validated['nis'];
         DataSiswa::create([
             'nama' => $validated['nama'],
             'nis' => $validated['nis'],

@@ -26,17 +26,17 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // Buat 10 user dengan role acak selain admin
-        $roles = ['siswa', 'Guru_BK', 'Guru'];
+        // $roles = ['siswa', 'Guru_BK', 'Guru'];
 
-        for ($i = 1; $i <= 10; $i++) {
-            User::create([
-                'name' => 'User ' . $i,
-                'username' => 'user' . $i,
-                'email' => 'user' . $i . '@example.com',
-                'password' => Hash::make('password'), // Password default
-                'role' => $roles[array_rand($roles)],
-                'remember_token' => Str::random(10),
-            ]);
-        }
+        // for ($i = 1; $i <= 10; $i++) {
+        //     User::create([
+        //         'name' => 'User ' . $i,
+        //         'username' => 'user' . $i,
+        //         'email' => 'user' . $i . '@example.com',
+        //         'password' => Hash::make('password'), // Password default
+        //         'role' => $roles[array_rand($roles)],
+        //         'remember_token' => Str::random(10),
+        //     ]);
+        // }
     }
 }

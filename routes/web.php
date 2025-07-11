@@ -33,6 +33,7 @@ Route::post('/store_penilaian', [PenilaianSiswaController::class,'store'])->name
 Route::get('/penilaian_delete/{id}', [PenilaianSiswaController::class,'destroy'])->middleware('auth');
 Route::get('/laporan_siswa', [LaporanSiswaController::class,'index'])->name('laporan_siswa')->middleware('auth');
 Route::get('/laporan_pdf', [LaporanSiswaController::class,'pdf'])->name('laporan_pdf')->middleware('auth');
+Route::get('/laporan_pdf_download', [LaporanSiswaController::class, 'pdfDownload'])->name('laporan_pdf_download')->middleware('auth');
 
 Route::get('/non_admin', function () {
     return view('non_admin');
