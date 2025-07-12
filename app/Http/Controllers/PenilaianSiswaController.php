@@ -37,7 +37,7 @@ class PenilaianSiswaController extends Controller
         $validated = $request->validate([  
         'nama_siswa' =>  'required',     
         'jenis' => 'required|in:prestasi,pelanggaran',
-        'kategori' => 'required|in:akademik,nonakademik',
+        'kategori' => 'required',
         'keterangan' => 'required|string|max:255',
         'poin' => 'required|integer|min:1|max:100',
         'tanggal' => 'required|date',

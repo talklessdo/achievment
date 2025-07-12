@@ -48,8 +48,6 @@
                     <label class="form-label">Kategori</label>
                     <select class="form-select" name="kategori" id="kategori-penilaian">
                         <option value="">Pilih Kategori</option>
-                        <option value="akademik" {{ old('kategori') == 'akademik' ? 'selected' : '' }}>Akademik</option>
-                        <option value="nonakademik" {{ old('kategori') == 'nonakademik' ? 'selected' : '' }}>Non Akademik</option>
                     </select>
                     @error('kategori')
                         <small style="color: red;">{{ $message }}</small>
@@ -159,6 +157,57 @@
 
     // Set nilai max pada input tanggal ke hari ini
     document.getElementById('tanggal-penilaian').setAttribute('max', formatDate(today));
+
+    // Fungsi untuk mengubah kategori berdasarkan jenis yang dipilih
+    function updateKategori() {
+        const jenisSelect = document.getElementById('jenis-penilaian');
+        const kategoriSelect = document.getElementById('kategori-penilaian');
+        const selectedJenis = jenisSelect.value;
+        
+        // Reset kategori dropdown
+        kategoriSelect.innerHTML = '<option value="">Pilih Kategori</option>';
+        
+        if (selectedJenis === 'prestasi') {
+            // Kategori untuk prestasi
+            const prestasiOptions = [
+                { value: 'akademik', text: 'Akademik' },
+                { value: 'nonakademik', text: 'Nonakademik' }
+            ];
+            
+            prestasiOptions.forEach(option => {
+                const optionElement = document.createElement('option');
+                optionElement.value = option.value;
+                optionElement.textContent = option.text;
+                if ('{{ old("kategori") }}' === option.value) {
+                    optionElement.selected = true;
+                }
+                kategoriSelect.appendChild(optionElement);
+            });
+        } else if (selectedJenis === 'pelanggaran') {
+            // Kategori untuk pelanggaran
+            const pelanggaranOptions = [
+                { value: 'ringan', text: 'Ringan' },
+                { value: 'sedang', text: 'Sedang' },
+                { value: 'berat', text: 'Berat' }
+            ];
+            
+            pelanggaranOptions.forEach(option => {
+                const optionElement = document.createElement('option');
+                optionElement.value = option.value;
+                optionElement.textContent = option.text;
+                if ('{{ old("kategori") }}' === option.value) {
+                    optionElement.selected = true;
+                }
+                kategoriSelect.appendChild(optionElement);
+            });
+        }
+    }
+
+    // Event listener untuk perubahan jenis
+    document.getElementById('jenis-penilaian').addEventListener('change', updateKategori);
+    
+    // Inisialisasi kategori saat halaman dimuat
+    updateKategori();
 
     function hapusPenilaian(hapus){
         let id = hapus.getAttribute('data-id');
